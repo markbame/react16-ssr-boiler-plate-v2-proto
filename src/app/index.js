@@ -1,3 +1,6 @@
+import 'babel-polyfill'
+import 'babel-core/register'
+
 import React, { Component } from 'react'
 import routes from './routes'
 import { Route, Link, Redirect, Switch } from 'react-router-dom'
