@@ -1,5 +1,5 @@
-import Home from './Home'
-import Grid from './Grid'
+import Home from './components/home'
+import Grid from './components/grid'
 import { fetchPopularRepos } from './api'
 
 const routes =  [

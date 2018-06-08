@@ -86,13 +86,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Home = __webpack_require__(9);
+var _home = __webpack_require__(17);
 
-var _Home2 = _interopRequireDefault(_Home);
+var _home2 = _interopRequireDefault(_home);
 
-var _Grid = __webpack_require__(10);
+var _grid = __webpack_require__(18);
 
-var _Grid2 = _interopRequireDefault(_Grid);
+var _grid2 = _interopRequireDefault(_grid);
 
 var _api = __webpack_require__(11);
 
@@ -101,10 +101,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var routes = [{
   path: '/',
   exact: true,
-  component: _Home2.default
+  component: _home2.default
 }, {
   path: '/popular/:id',
-  component: _Grid2.default,
+  component: _grid2.default,
   fetchInitialData: function fetchInitialData() {
     var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     return (0, _api.fetchPopularRepos)(path.split('/').pop());
@@ -228,11 +228,11 @@ var _routes2 = _interopRequireDefault(_routes);
 
 var _reactRouterDom = __webpack_require__(1);
 
-var _navbar = __webpack_require__(13);
+var _navbar = __webpack_require__(15);
 
 var _navbar2 = _interopRequireDefault(_navbar);
 
-var _noMatch = __webpack_require__(14);
+var _noMatch = __webpack_require__(16);
 
 var _noMatch2 = _interopRequireDefault(_noMatch);
 
@@ -289,7 +289,132 @@ var App = function (_Component) {
 exports.default = App;
 
 /***/ }),
-/* 9 */
+/* 9 */,
+/* 10 */,
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fetchPopularRepos = fetchPopularRepos;
+
+var _isomorphicFetch = __webpack_require__(12);
+
+var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function fetchPopularRepos() {
+  var language = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'all';
+
+  var encodedURI = encodeURI('https://api.github.com/search/repositories?q=stars:>1+language:' + language + '&sort=stars&order=desc&type=Repositories');
+
+  return (0, _isomorphicFetch2.default)(encodedURI).then(function (data) {
+    return data.json();
+  }).then(function (repos) {
+    return repos.items;
+  }).catch(function (error) {
+    console.warn(error);
+    return null;
+  });
+}
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+module.exports = require("isomorphic-fetch");
+
+/***/ }),
+/* 13 */,
+/* 14 */,
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  var languages = [{
+    name: 'All',
+    param: 'all'
+  }, {
+    name: 'JavaScript',
+    param: 'javascript'
+  }, {
+    name: 'Ruby',
+    param: 'ruby'
+  }, {
+    name: 'Python',
+    param: 'python'
+  }, {
+    name: 'Java',
+    param: 'java'
+  }];
+
+  return _react2.default.createElement(
+    'ul',
+    null,
+    languages.map(function (_ref) {
+      var name = _ref.name,
+          param = _ref.param;
+      return _react2.default.createElement(
+        'li',
+        { key: param },
+        _react2.default.createElement(
+          _reactRouterDom.NavLink,
+          { activeStyle: { fontWeight: 'bold' }, to: '/popular/' + param },
+          name
+        )
+      );
+    })
+  );
+};
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = NoMatch;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function NoMatch() {
+  return _react2.default.createElement(
+    'div',
+    null,
+    'Four Oh Four'
+  );
+}
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -315,7 +440,7 @@ function Home() {
 }
 
 /***/ }),
-/* 10 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -460,127 +585,6 @@ var Grid = function (_Component) {
 }(_react.Component);
 
 exports.default = Grid;
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.fetchPopularRepos = fetchPopularRepos;
-
-var _isomorphicFetch = __webpack_require__(12);
-
-var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function fetchPopularRepos() {
-  var language = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'all';
-
-  var encodedURI = encodeURI('https://api.github.com/search/repositories?q=stars:>1+language:' + language + '&sort=stars&order=desc&type=Repositories');
-
-  return (0, _isomorphicFetch2.default)(encodedURI).then(function (data) {
-    return data.json();
-  }).then(function (repos) {
-    return repos.items;
-  }).catch(function (error) {
-    console.warn(error);
-    return null;
-  });
-}
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports) {
-
-module.exports = require("isomorphic-fetch");
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(1);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-  var languages = [{
-    name: 'All',
-    param: 'all'
-  }, {
-    name: 'JavaScript',
-    param: 'javascript'
-  }, {
-    name: 'Ruby',
-    param: 'ruby'
-  }, {
-    name: 'Python',
-    param: 'python'
-  }, {
-    name: 'Java',
-    param: 'java'
-  }];
-
-  return _react2.default.createElement(
-    'ul',
-    null,
-    languages.map(function (_ref) {
-      var name = _ref.name,
-          param = _ref.param;
-      return _react2.default.createElement(
-        'li',
-        { key: param },
-        _react2.default.createElement(
-          _reactRouterDom.NavLink,
-          { activeStyle: { fontWeight: 'bold' }, to: '/popular/' + param },
-          name
-        )
-      );
-    })
-  );
-};
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = NoMatch;
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function NoMatch() {
-  return _react2.default.createElement(
-    'div',
-    null,
-    'Four Oh Four'
-  );
-}
 
 /***/ })
 /******/ ]);

@@ -9745,11 +9745,11 @@ var _routes2 = _interopRequireDefault(_routes);
 
 var _reactRouterDom = __webpack_require__(16);
 
-var _navbar = __webpack_require__(76);
+var _navbar = __webpack_require__(78);
 
 var _navbar2 = _interopRequireDefault(_navbar);
 
-var _noMatch = __webpack_require__(77);
+var _noMatch = __webpack_require__(79);
 
 var _noMatch2 = _interopRequireDefault(_noMatch);
 
@@ -9816,13 +9816,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Home = __webpack_require__(45);
+var _home = __webpack_require__(80);
 
-var _Home2 = _interopRequireDefault(_Home);
+var _home2 = _interopRequireDefault(_home);
 
-var _Grid = __webpack_require__(46);
+var _grid = __webpack_require__(81);
 
-var _Grid2 = _interopRequireDefault(_Grid);
+var _grid2 = _interopRequireDefault(_grid);
 
 var _api = __webpack_require__(47);
 
@@ -9831,10 +9831,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var routes = [{
   path: '/',
   exact: true,
-  component: _Home2.default
+  component: _home2.default
 }, {
   path: '/popular/:id',
-  component: _Grid2.default,
+  component: _grid2.default,
   fetchInitialData: function fetchInitialData() {
     var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     return (0, _api.fetchPopularRepos)(path.split('/').pop());
@@ -9844,179 +9844,8 @@ var routes = [{
 exports.default = routes;
 
 /***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = Home;
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function Home() {
-  return _react2.default.createElement(
-    'div',
-    null,
-    'Select a Language'
-  );
-}
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Grid = function (_Component) {
-  _inherits(Grid, _Component);
-
-  function Grid(props) {
-    _classCallCheck(this, Grid);
-
-    var _this = _possibleConstructorReturn(this, (Grid.__proto__ || Object.getPrototypeOf(Grid)).call(this, props));
-
-    var repos = void 0;
-    if (true) {
-      repos = window.__INITIAL_DATA__;
-      delete window.__INITIAL_DATA__;
-    } else {
-      repos = _this.props.staticContext.data;
-    }
-
-    _this.state = {
-      repos: repos,
-      loading: repos ? false : true
-    };
-
-    _this.fetchRepos = _this.fetchRepos.bind(_this);
-    return _this;
-  }
-
-  _createClass(Grid, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      if (!this.state.repos) {
-        this.fetchRepos(this.props.match.params.id);
-      }
-    }
-  }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate(prevProps, prevState) {
-      if (prevProps.match.params.id !== this.props.match.params.id) {
-        this.fetchRepos(this.props.match.params.id);
-      }
-    }
-  }, {
-    key: 'fetchRepos',
-    value: function fetchRepos(lang) {
-      var _this2 = this;
-
-      this.setState(function () {
-        return {
-          loading: true
-        };
-      });
-
-      this.props.fetchInitialData(lang).then(function (repos) {
-        return _this2.setState(function () {
-          return {
-            repos: repos,
-            loading: false
-          };
-        });
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _state = this.state,
-          loading = _state.loading,
-          repos = _state.repos;
-
-
-      if (loading === true) {
-        return _react2.default.createElement(
-          'p',
-          null,
-          'LOADING2'
-        );
-      }
-
-      return _react2.default.createElement(
-        'ul',
-        { style: { display: 'flex', flexWrap: 'wrap' } },
-        repos.map(function (_ref) {
-          var name = _ref.name,
-              owner = _ref.owner,
-              stargazers_count = _ref.stargazers_count,
-              html_url = _ref.html_url;
-          return _react2.default.createElement(
-            'li',
-            { key: name, style: { margin: 30 } },
-            _react2.default.createElement(
-              'ul',
-              null,
-              _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                  'a',
-                  { href: html_url },
-                  name
-                )
-              ),
-              _react2.default.createElement(
-                'li',
-                null,
-                '@',
-                owner.login
-              ),
-              _react2.default.createElement(
-                'li',
-                null,
-                stargazers_count,
-                ' stars'
-              )
-            )
-          );
-        })
-      );
-    }
-  }]);
-
-  return Grid;
-}(_react.Component);
-
-exports.default = Grid;
-
-/***/ }),
+/* 45 */,
+/* 46 */,
 /* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13421,7 +13250,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 76 */
+/* 76 */,
+/* 77 */,
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13477,7 +13308,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 77 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13501,6 +13332,179 @@ function NoMatch() {
     'Four Oh Four'
   );
 }
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = Home;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Home() {
+  return _react2.default.createElement(
+    'div',
+    null,
+    'Select a Language'
+  );
+}
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Grid = function (_Component) {
+  _inherits(Grid, _Component);
+
+  function Grid(props) {
+    _classCallCheck(this, Grid);
+
+    var _this = _possibleConstructorReturn(this, (Grid.__proto__ || Object.getPrototypeOf(Grid)).call(this, props));
+
+    var repos = void 0;
+    if (true) {
+      repos = window.__INITIAL_DATA__;
+      delete window.__INITIAL_DATA__;
+    } else {
+      repos = _this.props.staticContext.data;
+    }
+
+    _this.state = {
+      repos: repos,
+      loading: repos ? false : true
+    };
+
+    _this.fetchRepos = _this.fetchRepos.bind(_this);
+    return _this;
+  }
+
+  _createClass(Grid, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (!this.state.repos) {
+        this.fetchRepos(this.props.match.params.id);
+      }
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (prevProps.match.params.id !== this.props.match.params.id) {
+        this.fetchRepos(this.props.match.params.id);
+      }
+    }
+  }, {
+    key: 'fetchRepos',
+    value: function fetchRepos(lang) {
+      var _this2 = this;
+
+      this.setState(function () {
+        return {
+          loading: true
+        };
+      });
+
+      this.props.fetchInitialData(lang).then(function (repos) {
+        return _this2.setState(function () {
+          return {
+            repos: repos,
+            loading: false
+          };
+        });
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _state = this.state,
+          loading = _state.loading,
+          repos = _state.repos;
+
+
+      if (loading === true) {
+        return _react2.default.createElement(
+          'p',
+          null,
+          'LOADING2'
+        );
+      }
+
+      return _react2.default.createElement(
+        'ul',
+        { style: { display: 'flex', flexWrap: 'wrap' } },
+        repos.map(function (_ref) {
+          var name = _ref.name,
+              owner = _ref.owner,
+              stargazers_count = _ref.stargazers_count,
+              html_url = _ref.html_url;
+          return _react2.default.createElement(
+            'li',
+            { key: name, style: { margin: 30 } },
+            _react2.default.createElement(
+              'ul',
+              null,
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: html_url },
+                  name
+                )
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                '@',
+                owner.login
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                stargazers_count,
+                ' stars'
+              )
+            )
+          );
+        })
+      );
+    }
+  }]);
+
+  return Grid;
+}(_react.Component);
+
+exports.default = Grid;
 
 /***/ })
 /******/ ]);
