@@ -92,17 +92,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _home = __webpack_require__(11);
+var _home = __webpack_require__(12);
 
 var _home2 = _interopRequireDefault(_home);
 
-var _grid = __webpack_require__(12);
+var _grid = __webpack_require__(13);
 
 var _grid2 = _interopRequireDefault(_grid);
 
-var _api = __webpack_require__(13);
+var _api = __webpack_require__(15);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var routes = [{
   path: '/',
@@ -111,10 +113,31 @@ var routes = [{
 }, {
   path: '/popular/:id',
   component: _grid2.default,
-  fetchInitialData: function fetchInitialData() {
-    var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    return (0, _api.fetchPopularRepos)(path.split('/').pop());
-  }
+  fetchInitialData: function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return (0, _api.fetchPopularRepos)(path.split('/').pop());
+
+            case 2:
+              return _context.abrupt('return', _context.sent);
+
+            case 3:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, _callee, undefined);
+    }));
+
+    return function fetchInitialData() {
+      return _ref.apply(this, arguments);
+    };
+  }()
 }];
 
 exports.default = routes;
@@ -234,7 +257,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 __webpack_require__(2);
 
-__webpack_require__(17);
+__webpack_require__(11);
 
 var _react = __webpack_require__(0);
 
@@ -246,11 +269,11 @@ var _routes2 = _interopRequireDefault(_routes);
 
 var _reactRouterDom = __webpack_require__(1);
 
-var _navbar = __webpack_require__(15);
+var _navbar = __webpack_require__(17);
 
 var _navbar2 = _interopRequireDefault(_navbar);
 
-var _noMatch = __webpack_require__(16);
+var _noMatch = __webpack_require__(18);
 
 var _noMatch2 = _interopRequireDefault(_noMatch);
 
@@ -308,6 +331,12 @@ exports.default = App;
 
 /***/ }),
 /* 11 */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-core/register");
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -333,7 +362,7 @@ function Home() {
 }
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -349,7 +378,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _getRepo = __webpack_require__(14);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -365,17 +398,10 @@ var Grid = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Grid.__proto__ || Object.getPrototypeOf(Grid)).call(this, props));
 
-    var repos = void 0;
-    if (false) {
-      repos = window.__INITIAL_DATA__;
-      delete window.__INITIAL_DATA__;
-    } else {
-      repos = _this.props.staticContext.data;
-    }
-
     _this.state = {
-      repos: repos,
-      loading: repos ? false : true
+      repos: (0, _getRepo.getRepo)(_this.props),
+      loading: false,
+      isMounted: false
     };
 
     _this.fetchRepos = _this.fetchRepos.bind(_this);
@@ -384,10 +410,45 @@ var Grid = function (_Component) {
 
   _createClass(Grid, [{
     key: 'componentDidMount',
-    value: function componentDidMount() {
-      if (!this.state.repos) {
-        this.fetchRepos(this.props.match.params.id);
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.state.isMounted = true;
+
+                if (this.state.repos) {
+                  _context.next = 5;
+                  break;
+                }
+
+                if (!this.state.isMounted) {
+                  _context.next = 5;
+                  break;
+                }
+
+                _context.next = 5;
+                return this.fetchRepos(this.props.match.params.id);
+
+              case 5:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function componentDidMount() {
+        return _ref.apply(this, arguments);
       }
+
+      return componentDidMount;
+    }()
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.state.isMounted = false;
     }
   }, {
     key: 'componentDidUpdate',
@@ -435,11 +496,11 @@ var Grid = function (_Component) {
       return _react2.default.createElement(
         'ul',
         { style: { display: 'flex', flexWrap: 'wrap' } },
-        repos.map(function (_ref) {
-          var name = _ref.name,
-              owner = _ref.owner,
-              stargazers_count = _ref.stargazers_count,
-              html_url = _ref.html_url;
+        repos && repos.map(function (_ref2) {
+          var name = _ref2.name,
+              owner = _ref2.owner,
+              stargazers_count = _ref2.stargazers_count,
+              html_url = _ref2.html_url;
           return _react2.default.createElement(
             'li',
             { key: name, style: { margin: 30 } },
@@ -480,7 +541,26 @@ var Grid = function (_Component) {
 exports.default = Grid;
 
 /***/ }),
-/* 13 */
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var getRepo = exports.getRepo = function getRepo(props) {
+  if (false) {
+    return window.__INITIAL_DATA__;
+    //delete window.__INITIAL_DATA__
+  } else {
+    return props.staticContext.data;
+  }
+};
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -491,7 +571,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.fetchPopularRepos = undefined;
 
-var _isomorphicFetch = __webpack_require__(14);
+var _isomorphicFetch = __webpack_require__(16);
 
 var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
@@ -535,13 +615,13 @@ var fetchPopularRepos = exports.fetchPopularRepos = function () {
 }();
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = require("isomorphic-fetch");
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -597,7 +677,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -621,12 +701,6 @@ function NoMatch() {
     'Four Oh Four'
   );
 }
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
-module.exports = require("babel-core/register");
 
 /***/ })
 /******/ ]);

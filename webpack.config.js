@@ -9,6 +9,12 @@ var browserConfig = {
     filename: 'bundle.js',
     publicPath: '/'
   },
+  resolve: {
+    modules: [
+      path.resolve('./src/app'),
+      'node_modules'
+    ]
+  },
   module: {
     rules: [
       { test: /\.(js)$/, use: 'babel-loader' },
@@ -26,9 +32,15 @@ var serverConfig = {
   target: 'node',
   externals: [nodeExternals()],
   output: {
-    path: __dirname,
+    path: path.resolve(__dirname, 'build'),
     filename: 'server.js',
     publicPath: '/'
+  },
+  resolve: {
+    modules: [
+      path.resolve('./src/app'),
+      'node_modules'
+    ]
   },
   module: {
     rules: [

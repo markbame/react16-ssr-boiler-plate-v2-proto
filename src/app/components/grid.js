@@ -1,34 +1,37 @@
 import React, { Component } from 'react'
+import { getRepo } from 'utils/getRepo'
 
 class Grid extends Component {
   constructor(props) {
     super(props)
-
-    let repos
-    if (__isBrowser__) {
-      repos = window.__INITIAL_DATA__
-      delete window.__INITIAL_DATA__
-    } else {
-      repos = this.props.staticContext.data
-    }
-
     this.state = {
-      repos,
-      loading: repos ? false : true,
+      repos: getRepo(this.props),
+      loading: false,
+      isMounted: false
     }
 
     this.fetchRepos = this.fetchRepos.bind(this)
   }
-  componentDidMount () {
+  async componentDidMount  () {
+    this.state.isMounted = true;
+
     if (!this.state.repos) {
-      this.fetchRepos(this.props.match.params.id)
+       if(this.state.isMounted) {
+        await this.fetchRepos(this.props.match.params.id)
+      }
     }
   }
+
+  componentWillUnmount () {
+    this.state.isMounted = false;
+  }
+
   componentDidUpdate (prevProps, prevState) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
       this.fetchRepos(this.props.match.params.id)
     }
   }
+
   fetchRepos (lang) {
     this.setState(() => ({
       loading: true
@@ -49,7 +52,7 @@ class Grid extends Component {
 
     return (
       <ul style={{display: 'flex', flexWrap: 'wrap'}}>
-        {repos.map(({ name, owner, stargazers_count, html_url }) => (
+        {repos && repos.map(({ name, owner, stargazers_count, html_url }) => (
           <li key={name} style={{margin: 30}}>
             <ul>
               <li><a href={html_url}>{name}</a></li>

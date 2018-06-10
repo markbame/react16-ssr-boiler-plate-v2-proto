@@ -11,7 +11,7 @@ const routes =  [
   {
     path: '/popular/:id',
     component: Grid,
-    fetchInitialData: (path = '') => fetchPopularRepos(path.split('/').pop())
+    fetchInitialData: async (path = '') => await fetchPopularRepos(path.split('/').pop())
   }
 ]
 

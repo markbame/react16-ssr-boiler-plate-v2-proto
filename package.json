@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "npm run watch | npm run serve",
-    "serve": "node_modules/.bin/nodemon -L server.js",
+    "prod": "node build/server.js",
+    "serve": "node_modules/.bin/nodemon -L build/server.js",
     "watch": "node_modules/.bin/webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
