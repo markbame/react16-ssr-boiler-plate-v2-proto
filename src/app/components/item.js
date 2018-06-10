@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { getRepo } from 'utils/getRepo'
 
-class Grid extends Component {
+class Item extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -66,4 +66,4 @@ class Grid extends Component {
   }
 }
 
-export default Grid
+export default Item
