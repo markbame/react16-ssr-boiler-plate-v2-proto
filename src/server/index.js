@@ -3,6 +3,8 @@ import cors from "cors"
 import React from "react"
 import { renderToString } from "react-dom/server"
 import { StaticRouter, matchPath } from "react-router-dom"
+import { Provider } from 'react-redux'
+import store from '../store/index'
 import serialize from "serialize-javascript"
 import App from '../app'
 import routes from '../app/routes'
@@ -18,9 +20,11 @@ app.get("*", async (req, res, next) => {
 
   const data = activeRoute.fetchInitialData ? await activeRoute.fetchInitialData(req.path) : {}
   const markup = renderToString(
-    <StaticRouter location={req.url} context={{ data }}>
-      <App />
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter location={req.url} context={{ data }}>
+        <App />
+      </StaticRouter>
+    </Provider>
   )
 
   res.send(`

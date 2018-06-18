@@ -96,11 +96,11 @@ var _home = __webpack_require__(12);
 
 var _home2 = _interopRequireDefault(_home);
 
-var _item = __webpack_require__(17);
+var _item = __webpack_require__(14);
 
 var _item2 = _interopRequireDefault(_item);
 
-var _api = __webpack_require__(13);
+var _api = __webpack_require__(16);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -173,6 +173,12 @@ var _server = __webpack_require__(8);
 
 var _reactRouterDom = __webpack_require__(1);
 
+var _reactRedux = __webpack_require__(13);
+
+var _index = __webpack_require__(21);
+
+var _index2 = _interopRequireDefault(_index);
+
 var _serializeJavascript = __webpack_require__(9);
 
 var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
@@ -224,9 +230,13 @@ app.get("*", function () {
           case 8:
             data = _context.t0;
             markup = (0, _server.renderToString)(_react2.default.createElement(
-              _reactRouterDom.StaticRouter,
-              { location: req.url, context: { data: data } },
-              _react2.default.createElement(_app2.default, null)
+              _reactRedux.Provider,
+              { store: _index2.default },
+              _react2.default.createElement(
+                _reactRouterDom.StaticRouter,
+                { location: req.url, context: { data: data } },
+                _react2.default.createElement(_app2.default, null)
+              )
             ));
 
 
@@ -302,11 +312,11 @@ var _routes2 = _interopRequireDefault(_routes);
 
 var _reactRouterDom = __webpack_require__(1);
 
-var _navbar = __webpack_require__(15);
+var _navbar = __webpack_require__(18);
 
 var _navbar2 = _interopRequireDefault(_navbar);
 
-var _noMatch = __webpack_require__(16);
+var _noMatch = __webpack_require__(19);
 
 var _noMatch2 = _interopRequireDefault(_noMatch);
 
@@ -378,24 +388,275 @@ module.exports = require("babel-core/register");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = Home;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _getRepo = __webpack_require__(15);
+
+var _reactRedux = __webpack_require__(13);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function Home() {
-  return _react2.default.createElement(
-    'div',
-    null,
-    'Select a Language'
-  );
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Home = function (_Component) {
+  _inherits(Home, _Component);
+
+  function Home(props) {
+    _classCallCheck(this, Home);
+
+    var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+
+    _this.state = {
+      repos: (0, _getRepo.getRepo)(_this.props),
+      loading: false,
+      isMounted: false
+    };
+    return _this;
+  }
+
+  _createClass(Home, [{
+    key: 'render',
+    value: function render() {
+      var _state = this.state,
+          loading = _state.loading,
+          repos = _state.repos;
+
+
+      if (loading === true) {
+        return _react2.default.createElement(
+          'p',
+          null,
+          'LOADING2'
+        );
+      }
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        'Home'
+      );
+    }
+  }]);
+
+  return Home;
+}(_react.Component);
+
+function mapStateToProps(state, props) {
+  return {};
 }
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Home);
 
 /***/ }),
 /* 13 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-redux");
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _getRepo = __webpack_require__(15);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Item = function (_Component) {
+  _inherits(Item, _Component);
+
+  function Item(props) {
+    _classCallCheck(this, Item);
+
+    var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
+
+    _this.state = {
+      repos: (0, _getRepo.getRepo)(_this.props),
+      loading: false,
+      isMounted: false
+    };
+
+    _this.fetchRepos = _this.fetchRepos.bind(_this);
+    return _this;
+  }
+
+  _createClass(Item, [{
+    key: 'componentDidMount',
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.state.isMounted = true;
+                console.log('component did mount', this.state.repos);
+                _context.next = 4;
+                return this.fetchRepos(this.props.match.params.id);
+
+              case 4:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function componentDidMount() {
+        return _ref.apply(this, arguments);
+      }
+
+      return componentDidMount;
+    }()
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.state.isMounted = false;
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (prevProps.match.params.id !== this.props.match.params.id) {
+        this.fetchRepos(this.props.match.params.id);
+      }
+    }
+  }, {
+    key: 'fetchRepos',
+    value: function fetchRepos(lang) {
+      var _this2 = this;
+
+      console.log('fetching repos');
+      this.setState(function () {
+        return {
+          loading: true
+        };
+      });
+
+      this.props.fetchInitialData(lang).then(function (repos) {
+        return _this2.setState(function () {
+          return {
+            repos: repos,
+            loading: false
+          };
+        });
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _state = this.state,
+          loading = _state.loading,
+          repos = _state.repos;
+
+
+      if (loading === true) {
+        return _react2.default.createElement(
+          'p',
+          null,
+          'LOADING2'
+        );
+      }
+
+      return _react2.default.createElement(
+        'ul',
+        { style: { display: 'flex', flexWrap: 'wrap' } },
+        repos.length && repos.map(function (_ref2) {
+          var name = _ref2.name,
+              owner = _ref2.owner,
+              stargazers_count = _ref2.stargazers_count,
+              html_url = _ref2.html_url;
+          return _react2.default.createElement(
+            'li',
+            { key: name, style: { margin: 30 } },
+            _react2.default.createElement(
+              'ul',
+              null,
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: html_url },
+                  name
+                )
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                '@',
+                owner.login
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                stargazers_count,
+                ' stars'
+              )
+            )
+          );
+        })
+      );
+    }
+  }]);
+
+  return Item;
+}(_react.Component);
+
+exports.default = Item;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var getRepo = exports.getRepo = function getRepo(props) {
+  if (false) {
+    return window.__INITIAL_DATA__;
+    //delete window.__INITIAL_DATA__
+  } else {
+    return props.staticContext.data;
+  }
+};
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -406,7 +667,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.fetchPopularRepos = undefined;
 
-var _isomorphicFetch = __webpack_require__(14);
+var _isomorphicFetch = __webpack_require__(17);
 
 var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
@@ -450,13 +711,13 @@ var fetchPopularRepos = exports.fetchPopularRepos = function () {
 }();
 
 /***/ }),
-/* 14 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = require("isomorphic-fetch");
 
 /***/ }),
-/* 15 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -505,6 +766,11 @@ exports.default = function () {
           _reactRouterDom.NavLink,
           { activeStyle: { fontWeight: 'bold' }, to: '/popular/' + param },
           name
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.NavLink,
+          { activeStyle: { fontWeight: 'bold' }, to: '/' },
+          'Home'
         )
       );
     })
@@ -512,7 +778,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 16 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -538,7 +804,13 @@ function NoMatch() {
 }
 
 /***/ }),
-/* 17 */
+/* 20 */
+/***/ (function(module, exports) {
+
+module.exports = require("redux");
+
+/***/ }),
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -548,176 +820,30 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _redux = __webpack_require__(20);
 
-var _react = __webpack_require__(0);
+var _reduxThunk = __webpack_require__(22);
 
-var _react2 = _interopRequireDefault(_react);
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _getRepo = __webpack_require__(18);
+var _reducers = __webpack_require__(23);
+
+var _reduxDevtoolsExtension = __webpack_require__(25);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+var store = (0, _redux.createStore)(_reducers.reducers, {}, (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk2.default)));
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Item = function (_Component) {
-  _inherits(Item, _Component);
-
-  function Item(props) {
-    _classCallCheck(this, Item);
-
-    var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
-
-    _this.state = {
-      repos: (0, _getRepo.getRepo)(_this.props),
-      loading: false,
-      isMounted: false
-    };
-
-    _this.fetchRepos = _this.fetchRepos.bind(_this);
-    return _this;
-  }
-
-  _createClass(Item, [{
-    key: 'componentDidMount',
-    value: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                this.state.isMounted = true;
-
-                if (this.state.repos) {
-                  _context.next = 5;
-                  break;
-                }
-
-                if (!this.state.isMounted) {
-                  _context.next = 5;
-                  break;
-                }
-
-                _context.next = 5;
-                return this.fetchRepos(this.props.match.params.id);
-
-              case 5:
-              case 'end':
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function componentDidMount() {
-        return _ref.apply(this, arguments);
-      }
-
-      return componentDidMount;
-    }()
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.state.isMounted = false;
-    }
-  }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate(prevProps, prevState) {
-      if (prevProps.match.params.id !== this.props.match.params.id) {
-        this.fetchRepos(this.props.match.params.id);
-      }
-    }
-  }, {
-    key: 'fetchRepos',
-    value: function fetchRepos(lang) {
-      var _this2 = this;
-
-      this.setState(function () {
-        return {
-          loading: true
-        };
-      });
-
-      this.props.fetchInitialData(lang).then(function (repos) {
-        return _this2.setState(function () {
-          return {
-            repos: repos,
-            loading: false
-          };
-        });
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _state = this.state,
-          loading = _state.loading,
-          repos = _state.repos;
-
-
-      if (loading === true) {
-        return _react2.default.createElement(
-          'p',
-          null,
-          'LOADING2'
-        );
-      }
-
-      return _react2.default.createElement(
-        'ul',
-        { style: { display: 'flex', flexWrap: 'wrap' } },
-        repos && repos.map(function (_ref2) {
-          var name = _ref2.name,
-              owner = _ref2.owner,
-              stargazers_count = _ref2.stargazers_count,
-              html_url = _ref2.html_url;
-          return _react2.default.createElement(
-            'li',
-            { key: name, style: { margin: 30 } },
-            _react2.default.createElement(
-              'ul',
-              null,
-              _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                  'a',
-                  { href: html_url },
-                  name
-                )
-              ),
-              _react2.default.createElement(
-                'li',
-                null,
-                '@',
-                owner.login
-              ),
-              _react2.default.createElement(
-                'li',
-                null,
-                stargazers_count,
-                ' stars'
-              )
-            )
-          );
-        })
-      );
-    }
-  }]);
-
-  return Item;
-}(_react.Component);
-
-exports.default = Item;
+exports.default = store;
 
 /***/ }),
-/* 18 */
+/* 22 */
+/***/ (function(module, exports) {
+
+module.exports = require("redux-thunk");
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -726,14 +852,66 @@ exports.default = Item;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var getRepo = exports.getRepo = function getRepo(props) {
-  if (false) {
-    return window.__INITIAL_DATA__;
-    //delete window.__INITIAL_DATA__
-  } else {
-    return props.staticContext.data;
+exports.reducers = undefined;
+
+var _redux = __webpack_require__(20);
+
+var _users = __webpack_require__(24);
+
+var _users2 = _interopRequireDefault(_users);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var allReducers = {
+  users: _users2.default
+};
+
+var reducers = exports.reducers = (0, _redux.combineReducers)(allReducers);
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.default = function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { value: [], loading: false, error: false };
+  var action = arguments[1];
+
+  switch (action.type) {
+    case 'LOADING':
+      state = _extends({}, state, { loading: true, error: false });
+      return state;
+    case 'USER_AUTHENTICATED':
+      state = _extends({}, state, {
+        value: { user: action.user },
+        loading: false,
+        error: false
+      });
+      return state;
+    case 'USER_LOGOUT':
+      state = _extends({}, state, { loading: false, error: false, value: [] });
+      return state;
+    case 'USER_ERROR':
+      state = _extends({}, state, { loading: false, error: action });
+      return state;
+    default:
+      return state;
   }
 };
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+module.exports = require("redux-devtools-extension");
 
 /***/ })
 /******/ ]);

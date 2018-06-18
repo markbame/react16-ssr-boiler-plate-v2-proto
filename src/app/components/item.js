@@ -12,14 +12,11 @@ class Item extends Component {
 
     this.fetchRepos = this.fetchRepos.bind(this)
   }
+
   async componentDidMount  () {
     this.state.isMounted = true;
-
-    if (!this.state.repos) {
-       if(this.state.isMounted) {
-        await this.fetchRepos(this.props.match.params.id)
-      }
-    }
+        console.log('component did mount', this.state.repos)
+        await this.fetchRepos(this.props.match.params.id)    
   }
 
   componentWillUnmount () {
@@ -33,6 +30,7 @@ class Item extends Component {
   }
 
   fetchRepos (lang) {
+    console.log('fetching repos')
     this.setState(() => ({
       loading: true
     }))
@@ -52,7 +50,7 @@ class Item extends Component {
 
     return (
       <ul style={{display: 'flex', flexWrap: 'wrap'}}>
-        {repos && repos.map(({ name, owner, stargazers_count, html_url }) => (
+        {repos.length && repos.map(({ name, owner, stargazers_count, html_url }) => (
           <li key={name} style={{margin: 30}}>
             <ul>
               <li><a href={html_url}>{name}</a></li>

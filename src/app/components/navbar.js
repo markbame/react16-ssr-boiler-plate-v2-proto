@@ -26,6 +26,9 @@ export default () => {
           <NavLink activeStyle={{fontWeight: 'bold'}} to={`/popular/${param}`}>
             {name}
           </NavLink>
+          <NavLink activeStyle={{fontWeight: 'bold'}} to={`/`}>
+              Home
+          </NavLink>
         </li>
       ))}
     </ul>
