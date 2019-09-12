@@ -16,7 +16,7 @@ class Item extends Component {
   async componentDidMount  () {
     this.state.isMounted = true;
         console.log('component did mount', this.state.repos)
-        await this.fetchRepos(this.props.match.params.id)    
+        await this.fetchRepos(this.props.match.params.id)
   }
 
   componentWillUnmount () {

@@ -6,7 +6,8 @@
     "prod": "node build/server.js",
     "serve": "node_modules/.bin/nodemon -L build/server.js",
     "watch": "node_modules/.bin/webpack --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config  webpack.config.js"
   },
   "author": "markbame",
   "license": "MIT",

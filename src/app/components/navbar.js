@@ -27,7 +27,7 @@ export default () => {
             {name}
           </NavLink>
           <NavLink activeStyle={{fontWeight: 'bold'}} to={`/`}>
-              Home
+              
           </NavLink>
         </li>
       ))}
